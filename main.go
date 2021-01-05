@@ -1,4 +1,4 @@
-package logthat
+package logit
 
 import (
 	"fmt"
