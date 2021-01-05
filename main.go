@@ -10,13 +10,16 @@ import (
 var file *os.File
 
 // New ...
-func New(filename string) {
+func New(filename string) error {
 	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0766)
 	if err != nil {
 		log.Println("Error open logfile:", err)
+		return err
 	}
 
 	file = f
+
+	return nil
 }
 
 // Log ...
