@@ -1,3 +1,4 @@
+//Package logit - small package for simple logging in a file and terminal.
 package logit
 
 import (
@@ -9,7 +10,7 @@ import (
 
 var file *os.File
 
-// New ...
+// New create a *os.File for logging and return non-nil error, if something went wrong.
 func New(filename string) error {
 	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0766)
 	if err != nil {
@@ -22,7 +23,7 @@ func New(filename string) error {
 	return nil
 }
 
-// Log ...
+// Log write v into logfile and terminal
 func Log(v ...interface{}) {
 	log.Println(v...)
 
@@ -33,7 +34,7 @@ func Log(v ...interface{}) {
 	}
 }
 
-// Close ...
+// Close close logfile and write about this into terminal
 func Close() {
 	file.Close()
 	log.Println("Closed logfile")
