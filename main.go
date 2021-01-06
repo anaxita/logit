@@ -12,6 +12,7 @@ var file *os.File
 
 // Color pallete map
 var (
+	colorOff   = "\033[0m"
 	colorRed   = "\033[0;31m"
 	colorGreen = "\033[0;32m"
 	colorBlue  = "\033[0;34m"
@@ -32,7 +33,7 @@ func New(filename string) error {
 
 // Log write v into logfile and terminal in blue
 func Log(v ...interface{}) {
-	log.Println(colorBlue, "ERROR", v)
+	log.Println(colorBlue, "ERROR", v, colorOff)
 
 	_, err := file.WriteString(fmt.Sprintln(time.Now().Format("02.01.2006 15:04:05"), "ERROR", v))
 
@@ -44,7 +45,7 @@ func Log(v ...interface{}) {
 
 // Info write v into logfile and terminal in green color
 func Info(v ...interface{}) {
-	log.Println(colorGreen, "INFO", v)
+	log.Println(colorGreen, "INFO", v, colorOff)
 
 	_, err := file.WriteString(fmt.Sprintln(time.Now().Format("02.01.2006 15:04:05"), "INFO", v))
 
@@ -60,10 +61,9 @@ func Fatal(v ...interface{}) {
 
 	if err != nil {
 		log.Println(colorBlue, "ERROR write in logifle:", err)
-
 	}
 
-	log.Fatal(colorRed, "FATAL", v)
+	log.Fatal(colorRed, "FATAL", v, colorOff)
 }
 
 // Close close logfile and write about this into terminal
