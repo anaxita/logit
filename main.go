@@ -1,5 +1,5 @@
 //Package logit - small package for simple logging in a file and terminal.
-package logit
+package main
 
 import (
 	"fmt"
@@ -32,40 +32,46 @@ func New(filename string) error {
 
 // Log write v into logfile and terminal in blue
 func Log(v ...interface{}) {
-	log.Println(v...)
+	log.Println(colorBlue, "ERROR", v)
 
-	_, err := file.WriteString(fmt.Sprintln(colorBlue, time.Now().Format("02.01.2006 15:04:05"), "ERROR", v))
+	_, err := file.WriteString(fmt.Sprintln(time.Now().Format("02.01.2006 15:04:05"), "ERROR", v))
 
 	if err != nil {
-		log.Println("Error write in logifle:", err)
+		log.Println(colorBlue, "ERROR write in logifle:", err)
+
 	}
 }
 
 // Info write v into logfile and terminal in green color
 func Info(v ...interface{}) {
-	log.Println(v...)
+	log.Println(colorGreen, "INFO", v)
 
-	_, err := file.WriteString(fmt.Sprintln(colorGreen, time.Now().Format("02.01.2006 15:04:05"), "INFO", v))
+	_, err := file.WriteString(fmt.Sprintln(time.Now().Format("02.01.2006 15:04:05"), "INFO", v))
 
 	if err != nil {
-		log.Println("Error write in logifle:", err)
+		log.Println(colorBlue, "ERROR write in logifle:", err)
 	}
 }
 
 // Fatal write v into logfile and terminal in red color
 func Fatal(v ...interface{}) {
 
-	_, err := file.WriteString(fmt.Sprintln(colorRed, time.Now().Format("02.01.2006 15:04:05"), "FATAL", v))
+	_, err := file.WriteString(fmt.Sprintln(time.Now().Format("02.01.2006 15:04:05"), "FATAL", v))
 
 	if err != nil {
-		log.Println("Error write in logifle:", err)
+		log.Println(colorBlue, "ERROR write in logifle:", err)
+
 	}
 
-	log.Fatal(v...)
+	log.Fatal(colorRed, "FATAL", v)
 }
 
 // Close close logfile and write about this into terminal
 func Close() {
 	file.Close()
 	log.Println("Closed logfile")
+}
+
+func main() {
+	Info("Hello")
 }
