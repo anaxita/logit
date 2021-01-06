@@ -1,5 +1,5 @@
 //Package logit - small package for simple logging in a file and terminal.
-package main
+package logit
 
 import (
 	"fmt"
