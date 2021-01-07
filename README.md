@@ -1,4 +1,4 @@
-# logit - small package for simple logging in a file and terminal.
+# logit - small logger for simple logging into a file and terminal.
 
 ## Install
 `go get -u github.com/anaxita/logit`
