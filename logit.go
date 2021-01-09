@@ -36,33 +36,31 @@ func New(filename string) error {
 // Log write v into logfile and terminal in blue
 func Log(v ...interface{}) {
 	go func() {
-		mut.Lock()
-
 		log.Println(colorBlue, "ERROR", v, colorOff)
 
+		mut.Lock()
 		_, err := file.WriteString(fmt.Sprintln(time.Now().Format("02.01.2006 15:04:05"), "ERROR", v))
+		mut.Unlock()
 
 		if err != nil {
 			log.Println(colorBlue, "ERROR write in logifle:", err)
 		}
 
-		mut.Unlock()
 	}()
 }
 
 // Info write v into logfile and terminal in green color
 func Info(v ...interface{}) {
 	go func() {
-		mut.Lock()
 		log.Println(colorGreen, "INFO", v, colorOff)
 
+		mut.Lock()
 		_, err := file.WriteString(fmt.Sprintln(time.Now().Format("02.01.2006 15:04:05"), "INFO", v))
+		mut.Unlock()
 
 		if err != nil {
 			log.Println(colorBlue, "ERROR write in logifle:", err)
 		}
-
-		mut.Unlock()
 	}()
 }
 
@@ -70,16 +68,14 @@ func Info(v ...interface{}) {
 func Fatal(v ...interface{}) {
 	go func() {
 		mut.Lock()
-
 		_, err := file.WriteString(fmt.Sprintln(time.Now().Format("02.01.2006 15:04:05"), "FATAL", v))
+		mut.Unlock()
 
 		if err != nil {
 			log.Println(colorBlue, "ERROR write in logifle:", err)
 		}
 
 		log.Fatal(colorRed, "FATAL", v, colorOff)
-
-		mut.Unlock()
 	}()
 }
 
