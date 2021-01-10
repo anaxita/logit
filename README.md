@@ -11,7 +11,7 @@ func main() {
 	logfile := "/var/log/events.log"
 
 	// init logit
-	err := logit.New(logfile)
+	err := logit.New(logfile) // ! this func must be used only once in main func
 
 	if err != nil {
 		log.Fatal(err)
