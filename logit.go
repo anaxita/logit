@@ -22,6 +22,10 @@ var (
 
 // New create a *os.File for logging and return non-nil error, if something went wrong.
 func New(filename string) error {
+	if file != nil {
+		return nil
+	}
+
 	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0766)
 	if err != nil {
 		log.Println("Error open logfile:", err)
@@ -33,58 +37,42 @@ func New(filename string) error {
 	return nil
 }
 
+// logit is format log message to ERROR INFO or FATAL style
+func logit(level string, color string, message ...interface{}) {
+	logline := fmt.Sprintf("%s%s %s %v%s", color, time.Now().Format("02.01.2006 15:04:05"), level, message, colorOff)
+	fileline := fmt.Sprintf("%s %s %v\n", time.Now().Format("02.01.2006 15:04:05"), level, message)
+
+	_, err := file.WriteString(fileline)
+	if err != nil {
+		log.Println("[FILE_ERROR] cannot write into logile:", err)
+	}
+
+	if level == "FATAL" {
+		log.Fatal(logline)
+	} else {
+		log.Println(logline)
+	}
+}
+
 // Log write v into logfile and terminal in blue
 func Log(v ...interface{}) {
-	go func() {
-		log.Println(colorBlue, "ERROR", v, colorOff)
-
-		mut.Lock()
-		_, err := file.WriteString(fmt.Sprintln(time.Now().Format("02.01.2006 15:04:05"), "ERROR", v))
-		mut.Unlock()
-
-		if err != nil {
-			log.Println(colorBlue, "ERROR write in logifle:", err)
-		}
-
-	}()
+	logit("ERROR", colorBlue, v)
 }
 
 // Info write v into logfile and terminal in green color
 func Info(v ...interface{}) {
-	go func() {
-		log.Println(colorGreen, "INFO", v, colorOff)
-
-		mut.Lock()
-		_, err := file.WriteString(fmt.Sprintln(time.Now().Format("02.01.2006 15:04:05"), "INFO", v))
-		mut.Unlock()
-
-		if err != nil {
-			log.Println(colorBlue, "ERROR write in logifle:", err)
-		}
-	}()
+	logit("INFO", colorGreen, v)
 }
 
 // Fatal write v into logfile and terminal in red color
 func Fatal(v ...interface{}) {
-	go func() {
-		mut.Lock()
-		_, err := file.WriteString(fmt.Sprintln(time.Now().Format("02.01.2006 15:04:05"), "FATAL", v))
-		mut.Unlock()
-
-		if err != nil {
-			log.Println(colorBlue, "ERROR write in logifle:", err)
-		}
-
-		log.Fatal(colorRed, "FATAL", v, colorOff)
-	}()
+	logit("FATAL", colorRed, v)
 }
 
 // Close close logfile and write about this into terminal
 func Close() {
-	file.Close()
-	log.Println("Closed logfile")
-}
-
-func main() {
-	Info("Hello")
+	if file != nil {
+		file.Close()
+		log.Println("Closed logfile")
+	}
 }
