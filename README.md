@@ -1,4 +1,4 @@
-# logit - small logger for simple logging into a file and terminal.
+# logit - simple underlogger for write log into a file and terminal with date and levels.
 
 ## Install
 `go get -u github.com/anaxita/logit`
