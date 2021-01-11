@@ -1,6 +1,8 @@
 # logit
 
-## Logit is a simple underlogger for write log data into a file and terminal with date and levels.
+## Information
+
+Logit is a simple underlogger for write log data into a file and terminal with date and levels.
 
 ## Install
 `go get -u github.com/anaxita/logit`
