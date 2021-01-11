@@ -22,17 +22,18 @@ var (
 // New create a *os.File for logging and return non-nil error, if something went wrong.
 func New(filename string) error {
 	if file != nil {
+		os.Stdout.WriteString("Файл уже открыт\n")
 		return nil
 	}
 
 	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0766)
+
 	if err != nil {
 		os.Stdout.WriteString(fmt.Sprintln("[FILE_ERROR] cannot open logile:", err))
 		return err
 	}
 
 	file = f
-
 	return nil
 }
 
