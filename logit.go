@@ -3,7 +3,6 @@ package logit
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"sync"
 	"time"
@@ -28,7 +27,7 @@ func New(filename string) error {
 
 	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0766)
 	if err != nil {
-		log.Println("Error open logfile:", err)
+		os.Stdout.WriteString(fmt.Sprintln("[FILE_ERROR] cannot open logile:", err))
 		return err
 	}
 
@@ -39,21 +38,22 @@ func New(filename string) error {
 
 // logit is format log message to ERROR INFO or FATAL style
 func logit(level string, color string, message ...interface{}) {
-	logline := fmt.Sprintf("%s %s %v%s", color, level, message, colorOff)
-	fileline := fmt.Sprintf("%s %s %v", time.Now().Format("02.01.2006 15:04:05"), level, message)
+	logline := fmt.Sprintf("%s%s %s %v%s\n", color, time.Now().Format("02.01.2006 15:04:05"), level, message, colorOff)
+	fileline := fmt.Sprintf("%s %s %v\n", time.Now().Format("02.01.2006 15:04:05"), level, message)
 
 	mut.Lock()
 	defer mut.Unlock()
 
 	_, err := file.WriteString(fileline)
 	if err != nil {
-		log.Println("[FILE_ERROR] cannot write into logile:", err)
+		os.Stdout.WriteString(fmt.Sprintln("[FILE_ERROR] cannot write into logile:", err))
 	}
 
 	if level == "FATAL" {
-		log.Fatal(logline)
+		os.Stdout.WriteString(logline)
+		os.Exit(1)
 	} else {
-		log.Println(logline)
+		os.Stdout.WriteString(logline)
 	}
 }
 
@@ -76,6 +76,6 @@ func Fatal(v ...interface{}) {
 func Close() {
 	if file != nil {
 		file.Close()
-		log.Println("Closed logfile")
+		os.Stdout.WriteString("FILE closed\n")
 	}
 }
