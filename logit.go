@@ -59,17 +59,17 @@ func logit(level string, color string, message ...interface{}) {
 
 // Log write v into logfile and terminal in blue
 func Log(v ...interface{}) {
-	logit("ERROR", colorBlue, v)
+	logit("ERROR", colorBlue, v...)
 }
 
 // Info write v into logfile and terminal in green color
 func Info(v ...interface{}) {
-	logit("INFO", colorGreen, v)
+	logit("INFO", colorGreen, v...)
 }
 
 // Fatal write v into logfile and terminal in red color
 func Fatal(v ...interface{}) {
-	logit("FATAL", colorRed, v)
+	logit("FATAL", colorRed, v...)
 }
 
 // Close close logfile and write about this into terminal
