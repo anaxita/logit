@@ -22,7 +22,7 @@ var (
 // New create a *os.File for logging and return non-nil error, if something went wrong.
 func New(filename string) error {
 	if file != nil {
-		os.Stdout.WriteString("Файл уже открыт\n")
+		os.Stdout.WriteString("Lofile is already open\n")
 		return nil
 	}
 
