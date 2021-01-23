@@ -2,7 +2,8 @@
 
 ## Information
 
-Logit is a simple underlogger for write log data into a file and terminal with date and levels.
+Logit is a simple logger for write log data into a file and terminal with by three levels.
+Logit use custom date and color view
 
 ## Install
 `go get -u github.com/anaxita/logit`
@@ -27,7 +28,7 @@ func main() {
 	logit.Log("Logit!")
 }
 ```
-Result: `2021/01/06 02:17:56 Logit!`
+Result: `2021.01.06 02:17:56 Logit!`
 ## Info
 
 `logit.Info("Logit!")` has green color and using for info data.
