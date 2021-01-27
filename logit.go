@@ -39,7 +39,7 @@ func New(filename string) error {
 
 // logit is format log message to ERROR INFO or FATAL style
 func logit(level string, color string, messages ...interface{}) {
-	logline := fmt.Sprintf("%s%s [%s] %v%s\n", time.Now().Format("02.01.2006 15:04:05"), color, level, colorOff, messages)
+	logline := fmt.Sprintf("%s %s [%s] %v%s\n", time.Now().Format("02.01.2006 15:04:05"), color, level, colorOff, messages)
 	fileline := fmt.Sprintf("%s [%s] %v\n", time.Now().Format("02.01.2006 15:04:05"), level, messages)
 
 	mut.Lock()
