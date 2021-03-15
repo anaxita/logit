@@ -26,7 +26,7 @@ func New(filename string) error {
 		return nil
 	}
 
-	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0766)
+	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600)
 
 	if err != nil {
 		os.Stdout.WriteString(fmt.Sprintln("[FILE_ERROR] cannot open logile:", err))
