@@ -2,8 +2,8 @@
 
 ## Information
 
-Logit is a simple logger for write log data into a file and terminal with by three levels.
-Logit use custom date and color view
+Logit is a simple logger for write log data in a file and console with by three levels.
+Logit use custom date and color views.
 
 ## Install
 `go get -u github.com/anaxita/logit`
@@ -11,17 +11,11 @@ Logit use custom date and color view
 ## Using
 ```
 func main() {
+	logfilePath := "/var/log/events.log"
 
-	// path to logfile
-	logfile := "/var/log/events.log"
-
-	// init logit
-	err := logit.New(logfile) // ! this func must be used only once in main func
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	// New func must be used only once in the main func
+	_ := logit.New(logfilePath) 
+	
 	defer logit.Close()
 
 	// use Log func - you can do this func in any place in your program

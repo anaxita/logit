@@ -22,12 +22,11 @@ var (
 // New create a *os.File for logging and return non-nil error, if something went wrong.
 func New(filename string) error {
 	if file != nil {
-		os.Stdout.WriteString("Lofile is already open\n")
+		os.Stdout.WriteString("Logfile is already open\n")
 		return nil
 	}
 
 	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600)
-
 	if err != nil {
 		os.Stdout.WriteString(fmt.Sprintln("[FILE_ERROR] cannot open logile:", err))
 		return err
@@ -73,7 +72,7 @@ func Fatal(v ...interface{}) {
 	logit("FATAL", colorRed, v...)
 }
 
-// Close close logfile and write about this into terminal
+// Close close logfile and write about this into console
 func Close() {
 	if file != nil {
 		file.Close()
