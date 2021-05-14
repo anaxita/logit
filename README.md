@@ -2,7 +2,7 @@
 
 ## Information
 
-Logit is a simple logger for write log data in a file and console with by three levels.
+Logit is a simple logger for writing log data into a file or/and terminal with three levels logging.
 Logit use custom date and color views.
 
 ## Install
